@@ -18,6 +18,7 @@ app.get('/', (req : Request, res : Response) => {
 
 })
 
+//Criação de briefing
 app.post("/api/briefing", (req : Request<BriefingCreateDTO>, res : Response) => {
 
     const dto : BriefingCreateDTO = req.body;
@@ -25,12 +26,24 @@ app.post("/api/briefing", (req : Request<BriefingCreateDTO>, res : Response) => 
     briefings.push(briefing)
 
     res.sendStatus(200)
-
 })
 
+
+//Recuperação de briefing
 app.get("/api/briefing", (req : Request, res : Response) => {
     res.send(briefings).sendStatus(200)
 })
+
+//Recuperação de briefing por id
+app.get("/api/briefing/:id", (req : Request, res : Response) => {
+    const briefing : Briefing | undefined = briefings.find(b => b.id == req.params.id)
+    if(!briefing){
+        res.sendStatus(500)
+        return;
+    }
+    res.send(briefing).sendStatus(200)
+})
+
 
 app.listen(port, () => {
     console.log("Briefing está rodando na porta 3000, acesse http://localhost:3000")

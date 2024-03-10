@@ -4,13 +4,17 @@ import { Briefing } from './entity/Briefing';
 import { BriefingCreateDTO } from './dtos/BriefingCreateDTO';
 import { v4 } from 'uuid';
 import { BriefingState } from './enums/BriefingState';
-import { getBriefignById } from './HelperFunctions';
 import { BriefingEditDTO } from './dtos/BriefingEditDTO';
+import { Database } from './PostgresFunctions';
 
 const app = express();
 const port = 3000;
 
 let briefings : Briefing[] = []
+
+const database : Database = new Database();
+
+database.createTables();
 
 app.use(express.json())
 
@@ -25,7 +29,8 @@ app.post("/api/briefing", (req : Request<BriefingCreateDTO>, res : Response) => 
 
     const dto : BriefingCreateDTO = req.body;
     const briefing : Briefing = new Briefing(v4(), dto.clientName, dto.description, new Date(), BriefingState.negociacao);
-    briefings.push(briefing)
+
+    database.create(briefing);
 
     res.sendStatus(200)
 })
@@ -34,66 +39,109 @@ app.post("/api/briefing", (req : Request<BriefingCreateDTO>, res : Response) => 
 //Recuperação de briefing
 app.get("/api/briefing", (req : Request, res : Response) => {
 
-    const responseBriefings : Briefing[] = briefings.filter(briefing => !briefing.deleted)
+    let briefings : Briefing[] = []
 
-    res.send(responseBriefings).sendStatus(200)
+    database.getAll().then(response => {
+        if(response){
+
+            briefings = response
+            res.status(200).send(briefings);
+
+        }
+        else{
+            res.sendStatus(500)
+        }
+    })
+
 })
 
 //Recuperação de briefing por id
 app.get("/api/briefing/:id", (req : Request, res : Response) => {
 
-    const briefing : Briefing | undefined = getBriefignById(req.params.id, briefings);
-
-    if(!briefing){
+    if(!req.params.id){
         res.sendStatus(500)
         return;
     }
-    res.send(briefing).sendStatus(200)
+
+    database.getById(req.params.id).then(response => {
+        if(response !== undefined){
+            res.status(200).send(response);
+        }
+        else{
+            res.sendStatus(500)
+        }
+    })
 })
 
 //Apagar briefing
 app.delete("/api/briefing/:id", (req : Request, res : Response) => {
-    const briefing : Briefing | undefined = getBriefignById(req.params.id, briefings);
 
-    if(!briefing){
-        res.sendStatus(500);
+    if(!req.params.id){
+        res.sendStatus(500)
         return;
     }
 
-    briefing.deleted = true;
-    
-    res.send("Briefing apagado com sucesso.").sendStatus(200);
+    database.getById(req.params.id).then(response => {
+        if(!response){
+            res.sendStatus(500)
+            return;
+        }
 
+        const briefing : Briefing = response;
+
+        briefing.deleted = true;
+
+        database.save(briefing).then(response => {
+            res.status(200).send("Briefing apagado com sucesso.");
+        })
+
+
+    })
+    
 })
 
 //Editar briefing
 app.patch("/api/briefing/:id", (req : Request<BriefingEditDTO>, res : Response) => {
-    const briefing : Briefing | undefined = getBriefignById(req.params.id, briefings);
-    const editInfo : BriefingEditDTO = req.body;
-
-    if(!briefing){
-        res.sendStatus(500);
+    if(!req.params.id){
+        res.sendStatus(500)
         return;
     }
 
-    if(editInfo.clientName !== undefined && editInfo.clientName !== briefing.clientName){
-        briefing.clientName = editInfo.clientName;
-    }
+    database.getById(req.params.id).then(response => {
+        if(!response){
+            res.sendStatus(500)
+            return;
+        }
 
-    if(editInfo.description !== undefined && editInfo.description !== briefing.description){
-        briefing.description = editInfo.description;
-    }
+        const briefing : Briefing = response;
+        const editInfo : BriefingEditDTO = req.body;
 
-    if(editInfo.state !== undefined && editInfo.state !== briefing.state){
-        briefing.state = editInfo.state;
-    }
+        if(editInfo.clientName !== undefined && editInfo.clientName !== briefing.clientName){
+            briefing.clientName = editInfo.clientName;
+        }
 
-    //salvar no bd
+        if(editInfo.description !== undefined && editInfo.description !== briefing.description){
+            briefing.description = editInfo.description;
+        }
 
-    res.send(briefing).sendStatus(200)
+        if(editInfo.state !== undefined && editInfo.state !== briefing.state){
+            briefing.state = editInfo.state;
+        }
+
+        //salvar no bd
+
+        database.save(briefing)
+
+        res.status(200).send(briefing)
+
+
+    })
 
 })
 
 app.listen(port, () => {
     console.log("Briefing está rodando na porta 3000, acesse http://localhost:3000")
 })
+
+
+export default app;

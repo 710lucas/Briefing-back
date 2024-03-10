@@ -7,6 +7,7 @@ export class Briefing{
     description : string;
     date        : Date;
     state       : BriefingState;
+    deleted     : boolean;
 
     constructor(id : string, clientName : string, description : string, date : Date, state : BriefingState){
         this.id = id;
@@ -14,6 +15,7 @@ export class Briefing{
         this.description = description;
         this.date = date;
         this.state = state;
+        this.deleted = false;
     }
 
 }

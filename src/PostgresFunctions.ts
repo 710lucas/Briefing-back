@@ -15,6 +15,10 @@ export class Database{
 
     }
 
+    async endPool(){
+        await pool.end();
+    }
+
     async createTables(){
         try{
             await pool.query(

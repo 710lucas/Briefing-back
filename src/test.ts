@@ -2,12 +2,16 @@ import request from "supertest";
 
 import app from ".";
 import { BriefingCreateDTO } from "./dtos/BriefingCreateDTO";
+import { Database } from "./PostgresFunctions";
 
 const defaultBriefingCreate : BriefingCreateDTO = {clientName: "test", description: "test description"};
 
 describe("Endpoints API", () => {
 
     let createdId : string | undefined = undefined;
+
+    let database : Database = new Database();
+    database.createTables();
 
     it("Criar um novo briefing", async () => {
         const response = await request(app)

@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
 import { Briefing } from './entity/Briefing';
+import { BriefingResponse } from './dtos/BriefingResponse';
 
 export const pool = new Pool({
     user: process.env.POSTGRES_USER || "postgres",
@@ -90,8 +91,8 @@ export class Database{
         });
     }
 
-    getById = (id : string) : Promise<Briefing | undefined> => {
-        return pool.query<Briefing>("SELECT * FROM briefings WHERE ID = $1 AND deleted = false", [id])
+    getById = (id : string) : Promise<BriefingResponse | undefined> => {
+        return pool.query<BriefingResponse>("SELECT * FROM briefings WHERE ID = $1 AND deleted = false", [id])
         .then(response => {
             if(response.rowCount == 0){
                 return undefined;

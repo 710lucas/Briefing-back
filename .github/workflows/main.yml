@@ -1,4 +1,4 @@
-name: Run Tests on Version Change
+name: Rodar testes ao alterar versão
 
 on:
   push:
@@ -10,39 +10,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Verificando repositório
         uses: actions/checkout@v2
 
-      - name: Get Previous Version
+      - name: Recuperando versão anterior
         id: get_previous_version
+        #script para recuperação de versão anterior baseada no último commit
         run: echo "::set-output name=previous_version::$(git show HEAD~1:package.json | jq -r .version)"
 
       - name: Get Current Version
         id: get_current_version
+        #script para recuperação de versão atual
         run: echo "::set-output name=current_version::$(jq -r .version package.json)"
 
       - name: Compare Versions
         id: compare_versions
+        #Comparação entre versões, se não houver mudanças, pula o processo todo
         run: |
           if [ "${{ steps.get_previous_version.outputs.previous_version }}" != "${{ steps.get_current_version.outputs.current_version }}" ]; then
-            echo "Version changed!"
+            echo "Mudança nas versões"
             exit 0
           else
-            echo "No version change detected."
+            echo "Não houve mudança de versões"
             exit 1
           fi
 
-      - name: Setup Node.js
+      - name: Configurando Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: 'latest'
 
-      - name: Install Dependencies
+      - name: Instalando dependências e pacotes do Node
         run: npm install
 
       - name: Rodando postgres
         run: docker-compose up -d postgres
 
-      - name: Run Tests
+      - name: Rodando testes
         if: ${{ success() }}
         run: npm test

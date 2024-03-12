@@ -40,6 +40,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Rodando postgres
+        run: docker-compose up postgres
+
       - name: Run Tests
         if: ${{ success() }}
         run: npm test

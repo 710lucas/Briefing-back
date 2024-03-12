@@ -1,10 +1,10 @@
 {
   "name": "briefing-back",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node jest",
+    "test": "npx jest",
     "dev": "nodemon --exec ts-node ./src/index.ts"
   },
   "keywords": [],

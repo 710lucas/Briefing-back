@@ -23,12 +23,11 @@ export class Database{
 
                 DO $$
                 BEGIN
-                    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'meu_tipo') THEN
-                        -- Cria o tipo se ele não existir
-                        CREATE TYPE meu_tipo AS ENUM ('valor1', 'valor2', 'valor3');
-                        RAISE NOTICE 'Tipo "meu_tipo" criado com sucesso.';
+                    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'state') THEN
+                        CREATE TYPE state AS ENUM ('Negociação', 'Aprovado', 'Finalizado');
+                        RAISE NOTICE 'Tipo "state" criado com sucesso.';
                     ELSE
-                        RAISE NOTICE 'Tipo "meu_tipo" já existe.';
+                        RAISE NOTICE 'Tipo "state" já existe.';
                     END IF;
                 END$$;
 

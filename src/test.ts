@@ -1,8 +1,4 @@
 import request from "supertest";
-import express from "express";
-import { Briefing } from "./entity/Briefing";
-import { BriefingState } from "./enums/BriefingState";
-import { Database } from "./PostgresFunctions";
 
 import app from ".";
 import { BriefingCreateDTO } from "./dtos/BriefingCreateDTO";

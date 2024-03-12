@@ -8,10 +8,14 @@ const defaultBriefingCreate : BriefingCreateDTO = {clientName: "test", descripti
 
 describe("Endpoints API", () => {
 
+    beforeAll(async () =>{
+        await database.createTables();
+    })
+
     let createdId : string | undefined = undefined;
 
     let database : Database = new Database();
-    database.createTables();
+
 
     it("Criar um novo briefing", async () => {
         const response = await request(app)

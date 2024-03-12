@@ -41,7 +41,7 @@ jobs:
         run: npm install
 
       - name: Rodando postgres
-        run: docker-compose up postgres
+        run: docker-compose up -d postgres
 
       - name: Run Tests
         if: ${{ success() }}

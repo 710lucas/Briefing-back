@@ -1,5 +1,7 @@
 # Sistema de gerenciamento de Briefings
 
+**OBS.:** O back funciona normalmente sem o front, porém é recomendado que se use o front para um uso mais fácil da ferramenta. [Acesse o repositório do front](https://github.com/710lucas/Briefing-front)
+
 1. [Como rodar](#como-rodar)
    
     1.2. [Com docker](#com-docker)

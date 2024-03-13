@@ -29,13 +29,15 @@ app.post("/api/briefing", (req: Request<BriefingCreateDTO>, res: Response) => {
 
     if(dto.clientName.trim().length == 0 || dto.description.trim().length == 0){
         res.status(500).send("Nome ou descrição inválidos");
+        return;
     }
 
     const briefing: Briefing = new Briefing(v4(), dto.clientName, dto.description, new Date(), BriefingState.negociacao);
 
-    database.create(briefing);
+    database.create(briefing, (status, message) => {
+        res.status(status).send(message);
+    });
 
-    res.sendStatus(200)
 })
 
 
@@ -94,10 +96,10 @@ app.delete("/api/briefing/:id", (req: Request, res: Response) => {
 
         briefing.deleted = true;
 
-        database.save(briefing).then(response => {
-            res.status(200).send("Briefing apagado com sucesso.");
+        database.save(briefing, (status : number) => {
+            res.status(status).send(status == 200 ? "Briefing apagado com sucesso." : "Houve um erro ao apagar o briefing");
+            return;
         })
-
 
     })
 
@@ -145,10 +147,13 @@ app.patch("/api/briefing/:id", (req: Request<BriefingEditDTO>, res: Response) =>
 
         //salvar no bd
 
-        database.save(briefing)
+        database.save(briefing, (status : number, error? : string) => {
 
-        res.status(200).send(briefing)
+            res.status(status).send(briefing)
+            return;
 
+        });
+        
 
     })
 

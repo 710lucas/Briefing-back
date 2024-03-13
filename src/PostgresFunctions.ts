@@ -51,35 +51,39 @@ export class Database{
         }
     }
 
-    create = async (briefing : Briefing) => {
+    create = (briefing : Briefing, callback : (status : number, message : string) => void) => {
 
-        await pool.query(
+        return pool.query(
             "INSERT INTO briefings (client_name, description, date, state, deleted) VALUES ($1, $2, $3, $4, $5) RETURNING *",
             [briefing.clientName, briefing.description, briefing.date, briefing.state, briefing.deleted],
             (err, res) =>{
                 if(err){
                     console.log("Houve um erro ao inserir o ", briefing, " na tabela briefings");
                     console.log(err);
+                    callback(500, "Houve um erro ao criar o briefing");
                 } 
                 else{
                     console.log("Briefing adicionado com sucesso: ", res.rows[0])
+                    callback(200, "Briefing criado com sucesso")
                 }
             }
         )
     }
     
-    save = async (briefing : Briefing) => {
+    save = (briefing : Briefing, callback : (status : number, message : string) => void) => {
 
-        await pool.query(
+        return pool.query(
             "UPDATE briefings SET client_name = $1, description = $2, date = $3, state = $4, deleted = $5 WHERE id = $6;",
             [briefing.clientName, briefing.description, briefing.date, briefing.state, briefing.deleted, briefing.id],
             (err, res) =>{
                 if(err){
                     console.log("Houve um erro ao inserir o ", briefing, " na tabela briefings");
                     console.log(err);
+                    callback(500, "houve um erro ao salvar o briefing");
                 } 
                 else{
                     console.log("Briefing salvo com sucesso")
+                    callback(200, "Briefing salvo com sucesso");
                 }
             }
         )

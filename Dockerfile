@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 8080
 
+ENV POSTGRES_HOST=postgres
+
 CMD ["npm", "run", "dev"]

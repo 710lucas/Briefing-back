@@ -1,6 +1,7 @@
 services:
   #back
   web:
+    container_name: briefing_api
     build:
       context: .
     working_dir: /app
@@ -12,8 +13,11 @@ services:
       - postgres
     env_file:
       - .env
+    networks:
+      - default
 
   postgres:
+    container_name: briefing_db
     image: postgres:latest
     ports:
       - "5432:5432"
@@ -23,3 +27,12 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-briefing}
+    networks:
+      - default
+
+volumes:
+  briefing_db:
+    driver: local
+
+networks:
+  default:

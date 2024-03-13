@@ -15,10 +15,6 @@ export class Database{
 
     }
 
-    async endPool(){
-        await pool.end();
-    }
-
     async createTables(){
         try{
             await pool.query(
@@ -60,7 +56,7 @@ export class Database{
                 if(err){
                     console.log("Houve um erro ao inserir o ", briefing, " na tabela briefings");
                     console.log(err);
-                    callback(500, "Houve um erro ao criar o briefing");
+                    callback(400, "Houve um erro ao criar o briefing");
                 } 
                 else{
                     console.log("Briefing adicionado com sucesso: ", res.rows[0])
@@ -79,7 +75,7 @@ export class Database{
                 if(err){
                     console.log("Houve um erro ao inserir o ", briefing, " na tabela briefings");
                     console.log(err);
-                    callback(500, "houve um erro ao salvar o briefing");
+                    callback(400, "houve um erro ao salvar o briefing");
                 } 
                 else{
                     console.log("Briefing salvo com sucesso")

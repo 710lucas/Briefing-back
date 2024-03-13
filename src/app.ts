@@ -28,7 +28,7 @@ app.post("/api/briefing", (req: Request<BriefingCreateDTO>, res: Response) => {
     const dto: BriefingCreateDTO = req.body;
 
     if(dto.clientName.trim().length == 0 || dto.description.trim().length == 0){
-        res.status(500).send("Nome ou descrição inválidos");
+        res.status(400).send("Nome ou descrição inválidos");
         return;
     }
 
@@ -54,7 +54,7 @@ app.get("/api/briefing", (req: Request, res: Response) => {
 
         }
         else {
-            res.sendStatus(500)
+            res.sendStatus(400)
         }
     })
 
@@ -64,7 +64,7 @@ app.get("/api/briefing", (req: Request, res: Response) => {
 app.get("/api/briefing/:id", (req: Request, res: Response) => {
 
     if (!req.params.id) {
-        res.sendStatus(500)
+        res.sendStatus(400)
         return;
     }
 
@@ -73,7 +73,7 @@ app.get("/api/briefing/:id", (req: Request, res: Response) => {
             res.status(200).send(response);
         }
         else {
-            res.sendStatus(500)
+            res.sendStatus(400)
         }
     })
 })
@@ -82,13 +82,13 @@ app.get("/api/briefing/:id", (req: Request, res: Response) => {
 app.delete("/api/briefing/:id", (req: Request, res: Response) => {
 
     if (!req.params.id) {
-        res.sendStatus(500)
+        res.sendStatus(400)
         return;
     }
 
     database.getById(req.params.id).then(response => {
         if (!response) {
-            res.sendStatus(500)
+            res.sendStatus(400)
             return;
         }
 
@@ -111,13 +111,13 @@ app.patch("/api/briefing/:id", (req: Request<BriefingEditDTO>, res: Response) =>
     console.log(req.body)
 
     if (!req.params.id) {
-        res.sendStatus(500)
+        res.sendStatus(400)
         return;
     }
 
     database.getById(req.params.id).then(response => {
         if (!response) {
-            res.sendStatus(500)
+            res.sendStatus(400)
             return;
         }
 
@@ -127,7 +127,7 @@ app.patch("/api/briefing/:id", (req: Request<BriefingEditDTO>, res: Response) =>
 
         if (editInfo.clientName !== undefined && editInfo.clientName !== null && editInfo.clientName !== briefing.clientName) {
             if(editInfo.clientName.trim().length == 0){
-                res.status(500).send("Nome inválido")
+                res.status(400).send("Nome inválido")
                 return;
             }
             briefing.clientName = editInfo.clientName;
@@ -135,7 +135,7 @@ app.patch("/api/briefing/:id", (req: Request<BriefingEditDTO>, res: Response) =>
 
         if (editInfo.description !== undefined && editInfo.description !== null && editInfo.description !== briefing.description) {
             if(editInfo.description.trim().length == 0){
-                res.status(500).send("Descrição inválida")
+                res.status(400).send("Descrição inválida")
                 return;
             }
             briefing.description = editInfo.description;

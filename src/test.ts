@@ -2,8 +2,9 @@ import request from "supertest";
 
 import app from "./app";
 import { BriefingCreateDTO } from "./dtos/BriefingCreateDTO";
-import { Database } from "./PostgresFunctions";
+import { Database, pool } from "./PostgresFunctions";
 import { Server } from "http";
+import { Briefing } from "./entity/Briefing";
 
 const defaultBriefingCreate : BriefingCreateDTO = {clientName: "test", description: "test description"};
 
@@ -17,7 +18,7 @@ describe("Endpoints API", () => {
     })
 
     afterAll(async () => {
-        database.endPool();
+        await pool.end()
         server.close()
     })
 
@@ -27,11 +28,33 @@ describe("Endpoints API", () => {
 
 
     it("Criar um novo briefing", async () => {
+
         const response = await request(app)
             .post("/api/briefing")
             .send(defaultBriefingCreate)
+
         expect(response.status).toBe(200);
+
     });
+
+    it("Criar um briefing inválido", async () => {
+        //Cria-se um briefing com informações inválidas e espera um erro
+        const invalidNameBriefing : BriefingCreateDTO = {clientName: "", description: "Valid description"};
+
+        const response = await request(app)
+            .post("/api/briefing")
+            .send(invalidNameBriefing);
+        
+        expect(response.status).toBe(400);
+
+        const invalidDescriptionBriefing : BriefingCreateDTO = {clientName : "Test", description : ""};
+
+        const response2 = await request(app)
+            .post("/api/briefing")
+            .send(invalidDescriptionBriefing)
+
+        expect(response2.status).toBe(400)
+    })
 
     it("Pegar todos os briefings", async () => {
         const response = await request(app)
@@ -64,11 +87,28 @@ describe("Endpoints API", () => {
         expect(response.body.description).toBe("descrição2");
     })
 
+    it("Editar briefing criado com informações inválidas", async () => {
+        const response = await request(app)
+            .patch("/api/briefing/"+createdId)
+            .send({
+                clientName : "",
+                description : ""
+            })
+        expect(response.status).toBe(400)
+    })
+
     it("Deletar briefing", async () => {
         const response = await request(app)
             .delete("/api/briefing/"+createdId)
         
         expect(response.status).toBe(200);
+    })
+
+    it("Deletar briefing inexistente", async () => {
+        const response = await request(app)
+            .delete("/api/briefing/1")
+
+        expect(response.status).toBe(400)
     })
 
     it("Verificando todos os briefings após delete", async () => {
@@ -82,7 +122,7 @@ describe("Endpoints API", () => {
     it("Verificando getById após delete", async () => {
         const response = await request(app)
             .get("/api/briefing/"+createdId)
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(400);
     })
 
 })

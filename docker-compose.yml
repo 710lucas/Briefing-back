@@ -2,6 +2,7 @@ services:
   #back
   web:
     container_name: briefing_api
+    restart: always
     build:
       context: .
     working_dir: /app
@@ -19,6 +20,7 @@ services:
   postgres:
     container_name: briefing_db
     image: postgres:latest
+    restart: always
     ports:
       - "5432:5432"
     env_file:

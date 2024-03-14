@@ -2,6 +2,12 @@
 
 **OBS.:** O back funciona normalmente sem o front, porém é recomendado que se use o front para um uso mais fácil da ferramenta. [Acesse o repositório do front](https://github.com/710lucas/Briefing-front)
 
+Atenção: também é possível acessar o front através da [branch front](https://github.com/710lucas/Briefing-back/tree/front). Porém, rodando pela branch os testes automatizados não funcionam, é necessário acessar o repositório dedicado ao front
+
+Se for utilizado o front através da branch nesse repositório, adapte as etapas à branch
+
+
+
 1. [Como rodar](#como-rodar)
    
     1.2. [Com docker](#com-docker)

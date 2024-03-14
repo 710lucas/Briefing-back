@@ -1,6 +1,6 @@
 # Sistema de gerenciamento de Briefings
 
-**OBS.:** O back funciona normalmente sem o front, porém é recomendado que se use o front para um uso mais fácil da ferramenta. [Acesse o repositório do front](https://github.com/710lucas/Briefing-front)
+**OBS.:** o front **depende** do back para funcionar corretamente, sem o back não será possível realizar as funções principais. [Acesse o repositório do back](https://github.com/710lucas/Briefing-back)
 
 1. [Como rodar](#como-rodar)
    
@@ -21,52 +21,35 @@
 
     Depois de baixar o docker, você precisa ter o repositório em seu computador, pois ele contem os arquivos essenciais para que o docker consiga rodar o projeto
 
-    Para fazer isso, basta executar o comando `git clone https://github.com/710lucas/Briefing-back.git` ou `git clone git@github.com:710lucas/Briefing-back.git`
+    Para fazer isso, basta executar o comando `git clone https://github.com/710lucas/Briefing-front.git` ou `git clone git@github.com:710lucas/Briefing-front.git`
    
-    Caso você não possua o github baixado em seu computador, basta licar [neste link](https://github.com/710lucas/Briefing-back/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
+    Caso você não possua o github baixado em seu computador, basta licar [neste link](https://github.com/710lucas/Briefing-front/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
 
 3. Executar o docker
 
     Entre na pasta que você acabou de clonar/baixar e abra um terminal
 
-    Use o comando `docker compose up` e o programa estará funcionando, uma mensagem irá aparecer no terminal falando que o back está rodando na porta 3000, ou outra porta, caso seja informada nas configurações
+    Use o comando `docker compose up` e o programa estará funcionando, uma mensagem irá aparecer no terminal falando que o front está rodando na porta 80, ou outra porta, caso seja informada nas configurações
+
+    Acesse [localhost](http://localhost:80)
 
 ### Sem o docker
 
-1. Baixe e configure o postgresql no seu computador: [Link](https://www.postgresql.org/)
-
-2. Crie a database
-
-    Crie uma database chamada briefing, um usuário chamado postgres com a senha postgres
-   
-    Se você quiser usar uma database com um nome, usuário, senha e portas customizadas, adicione as suas configurações no arquivo .env usando as seguintes váriaveis:
-   
-    `POSTGRES_USER` Para usuário
-   
-    `POSTGRES_PASSWORD` Para senha
-   
-    `POSTGRES_DB` Para database
-   
-    `POSTGRES_HOST` Para outro endereço ip (padrão: localhost)
-   
-    `POSTGRES_PORT` Para porta
-
-4. Deixe o postgres rodando no fundo
-5. Baixe e configure o [NodeJS](https://nodejs.org/en) no seu computador
-6. Clone ou baixe o repositório
+1. Baixe e configure o [NodeJS](https://nodejs.org/en) no seu computador
+2. Clone ou baixe o repositório
 
     Depois de baixar o docker, você precisa ter o repositório em seu computador, pois ele contem os arquivos essenciais para que o docker consiga rodar o projeto
 
-    Para fazer isso, basta executar o comando `git clone https://github.com/710lucas/Briefing-back.git` ou `git clone git@github.com:710lucas/Briefing-back.git`
+    Para fazer isso, basta executar o comando `git clone https://github.com/710lucas/Briefing-front.git` ou `git clone git@github.com:710lucas/Briefing-front.git`
    
-    Caso você não possua o github baixado em seu computador, basta licar [neste link](https://github.com/710lucas/Briefing-back/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
+    Caso você não possua o github baixado em seu computador, basta licar [neste link](https://github.com/710lucas/Briefing-front/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
 
-7. Instale as dependencias
+3. Instale as dependencias
 
     Entre na pasta que você acabou de clonar/baixar e abra um terminal
     Em seguida rode o comando `npm install`
 
-8. Rodar o programa
+4. Rodar o programa
 
    Ainda no terminal, execute o comando `npm run dev`
 

@@ -1,15 +1,13 @@
 FROM node:latest
 
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install
+WORKDIR /opt/app
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 80
 
-ENV POSTGRES_HOST=postgres
+RUN npm i
 
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+ENTRYPOINT ["npm", "run", "preview", "--", "--port", "80", "--host"]

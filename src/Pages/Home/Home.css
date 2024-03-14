@@ -1,0 +1,77 @@
+* {
+    --background-color : #080e14;
+    --sombra-color: #3c4247;
+    --text-color : #e7eef5;
+    --primary-color : #a4bed8;
+    --secondary-color : #353072;
+    --accent-color : #806bc0;
+    --transparent-sombra-color: rgba(60, 66, 71, 0.5);
+
+    --error-color: #723030;
+
+    --negociacao-color : #a03711;
+    --finalizado-color : #29a011;
+    --aprovado-color : #1127a0;
+}
+
+:root{
+
+    background-color: var(--background-color);
+
+}
+
+.home-page{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+
+    gap: 3rem;
+
+}
+
+.buttons-container{
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+.title{
+    padding-top: 3rem;
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+.briefings-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5rem;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding: 0rem 5rem;
+    transition: ease-out 0.2s;
+}
+
+.briefings-container .p{
+    text-align: center;
+}
+
+.create-button{
+    padding: 1rem 1.5rem;
+    background-color: var(--transparent-sombra-color);
+    border-radius: 0.65rem;
+    cursor: pointer;
+    box-shadow: inset 0px 0px 5px var(--sombra-color);
+    transition: ease-out 0.2s;
+}
+
+.create-button:hover{
+    box-shadow: inset 0px 0px 15px var(--sombra-color), 0px 0px 10px var(--sombra-color);;
+}

@@ -22,10 +22,12 @@
     Depois de baixar o docker, você precisa ter o repositório em seu computador, pois ele contem os arquivos essenciais para que o docker consiga rodar o projeto
 
     Para fazer isso, basta executar o comando `git clone https://github.com/710lucas/Briefing-front.git` ou `git clone git@github.com:710lucas/Briefing-front.git`
-   
-    Caso você não possua o github baixado em seu computador, basta licar [neste link](https://github.com/710lucas/Briefing-front/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
 
-3. Executar o docker
+    Caso você não possua o github baixado em seu computador, basta clicar [neste link](https://github.com/710lucas/Briefing-back/releases) e baixar a release chamada Front End, escolha a opção "Source code zip", baixe e extraia a pasta
+   
+    Ou caso você não possua o github baixado em seu computador, basta clicar [neste link](https://github.com/710lucas/Briefing-front/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
+
+4. Executar o docker
 
     Entre na pasta que você acabou de clonar/baixar e abra um terminal
 
@@ -41,15 +43,17 @@
     Depois de baixar o docker, você precisa ter o repositório em seu computador, pois ele contem os arquivos essenciais para que o docker consiga rodar o projeto
 
     Para fazer isso, basta executar o comando `git clone https://github.com/710lucas/Briefing-front.git` ou `git clone git@github.com:710lucas/Briefing-front.git`
-   
-    Caso você não possua o github baixado em seu computador, basta licar [neste link](https://github.com/710lucas/Briefing-front/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
 
-3. Instale as dependencias
+    Caso você não possua o github baixado em seu computador, basta clicar [neste link](https://github.com/710lucas/Briefing-back/releases) e baixar a release chamada Front End, escolha a opção "Source code zip", baixe e extraia a pasta
+   
+    Ou caso você não possua o github baixado em seu computador, basta clicar [neste link](https://github.com/710lucas/Briefing-front/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
+
+4. Instale as dependencias
 
     Entre na pasta que você acabou de clonar/baixar e abra um terminal
     Em seguida rode o comando `npm install`
 
-4. Rodar o programa
+5. Rodar o programa
 
    Ainda no terminal, execute o comando `npm run dev`
 

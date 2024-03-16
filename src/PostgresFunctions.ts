@@ -31,7 +31,7 @@ export class Database{
                     END IF;
                 END$$;
 
-                CREATE TABLE IF NOT EXISTS briefings(
+                CREATE TABLE IF NOT EXISTS public.briefings(
                     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                     client_name VARCHAR(255),
                     description VARCHAR(1500),
@@ -73,12 +73,9 @@ export class Database{
             [briefing.clientName, briefing.description, briefing.date, briefing.state, briefing.deleted, briefing.id],
             (err, res) =>{
                 if(err){
-                    console.log("Houve um erro ao inserir o ", briefing, " na tabela briefings");
-                    console.log(err);
                     callback(400, "houve um erro ao salvar o briefing");
                 } 
                 else{
-                    console.log("Briefing salvo com sucesso")
                     callback(200, "Briefing salvo com sucesso");
                 }
             }

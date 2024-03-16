@@ -1,10 +1,11 @@
 import request from "supertest";
 
-import app from "./app";
+import app from "./BriefingController";
 import { BriefingCreateDTO } from "./dtos/BriefingCreateDTO";
 import { Database, pool } from "./PostgresFunctions";
 import { Server } from "http";
 import { Briefing } from "./entity/Briefing";
+import { BriefingState } from "./enums/BriefingState";
 
 const defaultBriefingCreate : BriefingCreateDTO = {clientName: "test", description: "test description"};
 
@@ -59,6 +60,7 @@ describe("Endpoints API", () => {
     it("Pegar todos os briefings", async () => {
         const response = await request(app)
             .get("/api/briefing")
+        
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0].client_name).toBe(defaultBriefingCreate.clientName);
@@ -85,6 +87,7 @@ describe("Endpoints API", () => {
         expect(response.status).toBe(200);
         expect(response.body.clientName).toBe("teste2");
         expect(response.body.description).toBe("descrição2");
+        expect(response.body.state).toBe(BriefingState.negociacao);
     })
 
     it("Editar briefing criado com informações inválidas", async () => {
@@ -95,6 +98,17 @@ describe("Endpoints API", () => {
                 description : ""
             })
         expect(response.status).toBe(400)
+    })
+
+    it("Garantindo que nenhuma alteração foi feita ao editar briefing com informações inválidas", async () => {
+
+        const response = await request(app)
+            .get("/api/briefing/"+createdId)
+        expect(response.status).toBe(200);
+        expect(response.body.client_name).toBe("teste2");
+        expect(response.body.description).toBe("descrição2");
+        expect(response.body.state).toBe(BriefingState.negociacao);
+        expect(response.body.deleted).toBeFalsy();
     })
 
     it("Deletar briefing", async () => {

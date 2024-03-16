@@ -22,7 +22,7 @@ export function toBriefing(response : BriefingResponse) : Briefing{
 }
 export function toBriefingResponse(response : Briefing) : BriefingResponse{
     return {
-            id: response.id,
+            id: response.id ?? "",
             client_name: response.clientName,
             date: response.date,
             deleted : response.deleted,

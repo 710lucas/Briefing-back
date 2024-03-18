@@ -29,7 +29,7 @@ Se for utilizado o front através da branch nesse repositório, adapte as etapas
 
     Para fazer isso, basta executar o comando `git clone https://github.com/710lucas/Briefing-back.git` ou `git clone git@github.com:710lucas/Briefing-back.git`
 
-    Caso você não possua o github baixado em seu computador, basta clicar [neste link](https://github.com/710lucas/Briefing-back/releases) e baixar a release chamada Back End, escolha a opção "Source code zip", baixe e extraia a pasta
+    Caso você não possua o github baixado em seu computador, basta clicar [neste link](https://github.com/710lucas/Briefing-back/releases), escolher a release chamada Back End, em seguida clique em `Assets` e escolha a opção "Source code zip", baixe e extraia a pasta
    
     Ou caso você não possua o github baixado em seu computador, basta clicar [neste link](https://github.com/710lucas/Briefing-back/archive/refs/heads/main.zip), ou clicar no botão verde "Code" e depois "Download zip", depois extraia a pasta e continue
 

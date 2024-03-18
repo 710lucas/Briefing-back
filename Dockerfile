@@ -8,8 +8,10 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 8080
+RUN npm run build
+
+EXPOSE 3000
 
 ENV POSTGRES_HOST=postgres
 
-CMD ["npm", "run", "dev"]
+CMD ["sh", "-c", "npm install && npm run build && npm run dev"]
